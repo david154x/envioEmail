@@ -3,7 +3,13 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
-app.use(cors());
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
 
 const transporter = nodemailer.createTransport({
   host: "smtp.office365.com",
@@ -15,14 +21,10 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-async function sendEmail({
-  nombreCompleto,
-  primerApellido,
-  ciudad,
-  telefono,
-  email,
-  detalle,
-}, res) {
+async function sendEmail(
+  { nombreCompleto, primerApellido, ciudad, telefono, email, detalle },
+  res
+) {
   const detalleFinal =
     "Recibe un cordial saludo: " +
     nombreCompleto +
@@ -50,6 +52,10 @@ async function sendEmail({
     "\n" +
     "Este es un mensaje automatico porfavor no responda este email";
 
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
   const mailOptions = {
     from: "rsavillasasbic@outlook.com",
     to: email,
@@ -73,7 +79,9 @@ app.post("/api/sendMail", async (req, res) => {
 });
 
 app.all("*", (req, res) => {
-  res.status(400).json({ message: `Incorrect method: ${req.method}. Did you mean POST?` });
+  res
+    .status(400)
+    .json({ message: `Incorrect method: ${req.method}. Did you mean POST?` });
 });
 
 module.exports = app;
