@@ -4,12 +4,12 @@ const cors = require("cors");
 
 const app = express();
 
-app.use(cors({ origin: "https://envio-email.vercel.app" }));
+app.use(cors({ origin: '*' }));
 
 const transporter = nodemailer.createTransport({
   host: "smtp.office365.com",
   port: 587,
-  secure: true,
+  secure: false,
   auth: {
     user: "rsavillasasbic@outlook.com",
     pass: "rsavilla2023.*",
