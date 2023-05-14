@@ -8,7 +8,7 @@ app.use(cors());
 const transporter = nodemailer.createTransport({
   host: "smtp.office365.com",
   port: 587,
-  secure: false,
+  secure: true,
   auth: {
     user: "rsavillasasbic@outlook.com",
     pass: "rsavilla2023.*",
