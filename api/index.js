@@ -6,7 +6,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "*",
+    origin: "https://rsavilla-2023.vercel.app",
     methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
   })
 );
